@@ -67,6 +67,8 @@ set order_pizza.amount = pizzas.pizza_price * order_pizza.quantity;
 
 select * from order_pizza;
 
+set sql_safe_updates = 0;
+
 update orders
 join (
 select order_id, sum(amount) as order_total
@@ -85,6 +87,7 @@ from orders
 group by customer_id
 ) t on customers.customer_id = t.customer_id
 set customers.expenditure = t.customer_total;
+set sql_safe_updates = 1;
 
 select * from customers;
 
